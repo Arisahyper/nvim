@@ -27,3 +27,8 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvi
 5. Start NeoVim `nvim`
 6. Run `:PackerSync`
 7. Completed!!
+
+
+
+
+

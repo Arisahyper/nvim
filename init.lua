@@ -38,6 +38,7 @@ vim.opt.shortmess:append("c")
 vim.cmd("set whichwrap+=<,>,h,l")
 vim.cmd([[set iskeyword+=-]])
 vim.cmd([[set formatoptions-=cro]])
+vim.cmd([[autocmd BufRead,BufEnter *.astro set filetype=astro]])
 
 -- Fast options --
 vim.g.did_install_default_menus = 1
@@ -59,10 +60,10 @@ vim.g.loaded_tutor_mode_plugin = 1
 vim.g.loaded_zipPlugin = 1
 vim.g.skip_loading_mswin = 1
 
--- Colorscheme --
+-- 起動時設定 --
 vim.cmd([[
     try
-        colorscheme default
+        colorscheme tokyonight 
     catch /^Vim\%((\a\+)\)\=:E185/
         colorscheme default
     endtry
@@ -75,7 +76,7 @@ vim.api.nvim_set_keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", opts)
+vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", opts)   -- mv tab
 vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", opts)
 vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", opts)
 vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", opts)
@@ -83,12 +84,32 @@ vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", opts)
 vim.api.nvim_set_keymap("n", "ss", ":split<CR>", opts)
 vim.api.nvim_set_keymap("n", "sv", ":vsplit<CR>", opts)
 
+-- faster
+vim.api.nvim_set_keymap("n", "j", "<Plug>(faster_move_gj)", { noremap = false, silent = true })
+vim.api.nvim_set_keymap("n", "k", "<Plug>(faster_move_gk)", { noremap = false, silent = true })
+
+-- \
+vim.keymap.set("i", "<M-¥>", "<C-v>u005c")
+
+-- neo-tree
+vim.api.nvim_set_keymap("n", "<C-e>", ":Neotree toggle=true<CR>", opts)
+
+-- terminal
+require("toggleterm").setup({
+  open_mapping = [[<C-j>]],
+  size = 20,
+  hide_numbers = true,
+  direction = 'horizontal',
+  close_on_exit = true,
+})
+
 -- LSP
 require("config.cmp")
 require("lsp")
+
 -- Treesitter --
 require("nvim-treesitter.configs").setup({
-	ensure_installed = "all",
+    ensure_installed = "all",
 	ignore_install = { "phpdoc" },
 	context_commentstring = {
 		enable = true,
@@ -110,10 +131,22 @@ return require("packer").startup(function()
     use("hrsh7th/nvim-cmp")
     use("hrsh7th/cmp-buffer")
     use("hrsh7th/cmp-path")
+    use("folke/tokyonight.nvim")    -- colorscheme
     use("hrsh7th/cmp-cmdline")
-    use("hrsh7th/cmp-nvim-lsp")
+    use("hrsh7th/cmp-nvim-lsp")     -- LSP
+    use("PHSix/faster.nvim")        -- faster
     use("hrsh7th/cmp-nvim-lua")
     use("neovim/nvim-lspconfig")
     use("williamboman/mason.nvim")
     use("williamboman/mason-lspconfig.nvim")
+    use({ "akinsho/toggleterm.nvim", tag = "v2.*" })    -- toggleterm
+    use({
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "kyazdani42/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
+        },
+    })
 end)
