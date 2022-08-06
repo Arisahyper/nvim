@@ -2,7 +2,7 @@ vim.opt.backup = false
 vim.opt.clipboard = "unnamedplus"
 vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
-vim.opt.cmdheight = 1
+vim.opt.cmdheight = 0 
 vim.opt.completeopt = { "menuone", "noselect" }
 vim.opt.conceallevel = 0
 vim.opt.hlsearch = true
@@ -85,8 +85,8 @@ vim.api.nvim_set_keymap("n", "ss", ":split<CR>", opts)
 vim.api.nvim_set_keymap("n", "sv", ":vsplit<CR>", opts)
 
 -- faster
-vim.api.nvim_set_keymap("n", "j", "<Plug>(faster_move_gj)", { noremap = false, silent = true })
-vim.api.nvim_set_keymap("n", "k", "<Plug>(faster_move_gk)", { noremap = false, silent = true })
+-- vim.api.nvim_set_keymap("n", "j", "<Plug>(faster_move_gj)", { noremap = false, silent = true })
+-- vim.api.nvim_set_keymap("n", "k", "<Plug>(faster_move_gk)", { noremap = false, silent = true })
 
 -- \
 vim.keymap.set("i", "<M-¥>", "<C-v>u005c")
@@ -96,11 +96,11 @@ vim.api.nvim_set_keymap("n", "<C-e>", ":Neotree toggle=true<CR>", opts)
 
 -- terminal
 require("toggleterm").setup({
-  open_mapping = [[<C-j>]],
-  size = 20,
-  hide_numbers = true,
-  direction = 'horizontal',
-  close_on_exit = true,
+ open_mapping = [[<C-j>]],
+ size = 20,
+ hide_numbers = true,
+ direction = 'float',
+ close_on_exit = true,
 })
 
 -- LSP
@@ -123,6 +123,13 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 
+-- Pairs
+require("nvim-autopairs").setup {}
+
+-- copilot  
+require("copilot").setup {}
+
+
 -- Plugins --
 return require("packer").startup(function()
 	use("wbthomason/packer.nvim")
@@ -132,7 +139,12 @@ return require("packer").startup(function()
     use("hrsh7th/cmp-buffer")
     use("hrsh7th/cmp-path")
     use("folke/tokyonight.nvim")    -- colorscheme
+    use({
+        "zbirenbaum/copilot-cmp",
+        module = "copilot_cmp",
+    })
     use("hrsh7th/cmp-cmdline")
+    use({"zbirenbaum/copilot.lua"}) -- copilot
     use("hrsh7th/cmp-nvim-lsp")     -- LSP
     use("PHSix/faster.nvim")        -- faster
     use("hrsh7th/cmp-nvim-lua")
@@ -140,6 +152,7 @@ return require("packer").startup(function()
     use("williamboman/mason.nvim")
     use("williamboman/mason-lspconfig.nvim")
     use({ "akinsho/toggleterm.nvim", tag = "v2.*" })    -- toggleterm
+    use({"windwp/nvim-autopairs"})
     use({
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v2.x",
