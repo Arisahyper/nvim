@@ -140,11 +140,12 @@ return require("packer").startup(function()
     use("hrsh7th/cmp-buffer")
     use("hrsh7th/cmp-path")
     use("folke/tokyonight.nvim")    -- colorscheme
-    use({
+    use('frenzyexists/aquarium-vim') -- colorscheme
+    use({                           -- copilot
         "zbirenbaum/copilot-cmp",
         module = "copilot_cmp",
     })
-    use("hrsh7th/cmp-cmdline")
+    use("hrsh7th/cmp-cmdline")      -- copilot
     use({"zbirenbaum/copilot.lua"}) -- copilot
     use("hrsh7th/cmp-nvim-lsp")     -- LSP
     use("PHSix/faster.nvim")        -- faster

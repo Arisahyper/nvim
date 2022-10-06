@@ -69,6 +69,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["aquarium-vim"] = {
+    loaded = true,
+    path = "/Users/arisahyper/.local/share/nvim/site/pack/packer/start/aquarium-vim",
+    url = "https://github.com/frenzyexists/aquarium-vim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/Users/arisahyper/.local/share/nvim/site/pack/packer/start/cmp-buffer",
